@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RestaurantBL.Models;
 
 namespace RestaurantBL.Interfaces
 {
-    internal interface IGebruikerManager
+    public interface IGebruikerManager
     {
+        Gebruiker RegistreerGebruiker(Gebruiker gebruiker);
+        Gebruiker UpdateGebruiker(Gebruiker gebruiker);
+        void UitschrijvenGebruiker(int klantnummer);
     }
 }

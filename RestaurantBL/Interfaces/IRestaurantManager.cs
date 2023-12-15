@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RestaurantBL.Models;
 
 namespace RestaurantBL.Interfaces
 {
-    internal interface IRestaurantManager
+    public interface IRestaurantManager
     {
+        Restaurant VoegRestaurantToe(Restaurant restaurant);
+        Restaurant UpdateRestaurant(Restaurant restaurant);
+        void VerwijderRestaurant(string naam);
     }
 }

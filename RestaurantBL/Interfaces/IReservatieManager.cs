@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RestaurantBL.Models;
 
 namespace RestaurantBL.Interfaces
 {
-    internal interface IReservatieManager
+    public interface IReservatieManager
     {
+        Reservatie MaakReservatie(Reservatie reservatie);
+        Reservatie UpdateReservatie(Reservatie reservatie);
+        void AnnuleerReservatie(int reservatienummer);
     }
 }
