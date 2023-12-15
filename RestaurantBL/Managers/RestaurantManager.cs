@@ -16,9 +16,10 @@ namespace RestaurantBL.Managers
 
         public Restaurant VoegRestaurantToe(Restaurant restaurant)
         {
-            _restaurants.Add(restaurant); 
+            _restaurants.Add(restaurant);
             return restaurant;
         }
+        //voornamelijk gewerkt in database
 
         public Restaurant UpdateRestaurant(Restaurant restaurant)
         {
