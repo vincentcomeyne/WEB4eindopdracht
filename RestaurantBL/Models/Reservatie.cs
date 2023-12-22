@@ -19,3 +19,4 @@ namespace RestaurantBL.Models
         public TimeSpan Uur { get; set; }
     }
 }
+//voornamelijk gewerkt in database 22/12

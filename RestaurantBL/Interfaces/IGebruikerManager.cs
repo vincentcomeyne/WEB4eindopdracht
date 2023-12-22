@@ -9,3 +9,4 @@ namespace RestaurantBL.Interfaces
         void UitschrijvenGebruiker(int klantnummer);
     }
 }
+//voornamelijk gewerkt in database 22/12

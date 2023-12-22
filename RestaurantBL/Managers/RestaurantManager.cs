@@ -19,7 +19,7 @@ namespace RestaurantBL.Managers
             _restaurants.Add(restaurant);
             return restaurant;
         }
-        //voornamelijk gewerkt in database
+        //voornamelijk gewerkt in database 22/12
 
         public Restaurant UpdateRestaurant(Restaurant restaurant)
         {

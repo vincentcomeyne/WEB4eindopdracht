@@ -23,3 +23,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+//voornamelijk gewerkt in database 22/12
