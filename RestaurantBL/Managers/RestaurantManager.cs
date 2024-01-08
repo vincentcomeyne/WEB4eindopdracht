@@ -1,43 +1,42 @@
 ﻿using RestaurantBL.Interfaces;
 using RestaurantBL.Models;
-using System.Collections.Generic;
+using RestaurantDL;
 using System.Linq;
 
-namespace RestaurantBL.Managers
+public class RestaurantManager : IRestaurantManager
 {
-    public class RestaurantManager : IRestaurantManager
+    private readonly RestaurantContext _context;
+
+    public RestaurantManager(RestaurantContext context)
     {
-        private readonly List<Restaurant> _restaurants; // Nog aan te passen ivm database
+        _context = context;
+    }
 
-        public RestaurantManager()
+    public Restaurant VoegRestaurantToe(Restaurant restaurant)
+    {
+        _context.Restaurants.Add(restaurant);
+        _context.SaveChanges();
+        return restaurant;
+    }
+
+    public Restaurant UpdateRestaurant(Restaurant restaurant)
+    {
+        var bestaandRestaurant = _context.Restaurants.Find(restaurant.Naam);
+        if (bestaandRestaurant != null)
         {
-            _restaurants = new List<Restaurant>();
+            // Update logica nog impl...
+            _context.SaveChanges();
         }
+        return bestaandRestaurant;
+    }
 
-        public Restaurant VoegRestaurantToe(Restaurant restaurant)
+    public void VerwijderRestaurant(string naam)
+    {
+        var restaurant = _context.Restaurants.FirstOrDefault(r => r.Naam == naam);
+        if (restaurant != null)
         {
-            _restaurants.Add(restaurant);
-            return restaurant;
-        }
-        //voornamelijk gewerkt in database 22/12
-
-        public Restaurant UpdateRestaurant(Restaurant restaurant)
-        {
-            var bestaandRestaurant = _restaurants.FirstOrDefault(r => r.Naam == restaurant.Naam);
-            if (bestaandRestaurant != null)
-            {
-                // Update restaurant details
-            }
-            return bestaandRestaurant;
-        }
-
-        public void VerwijderRestaurant(string naam)
-        {
-            var restaurant = _restaurants.FirstOrDefault(r => r.Naam == naam);
-            if (restaurant != null)
-            {
-                _restaurants.Remove(restaurant);
-            }
+            _context.Restaurants.Remove(restaurant);
+            _context.SaveChanges();
         }
     }
 }

@@ -1,42 +1,42 @@
 ﻿using RestaurantBL.Interfaces;
 using RestaurantBL.Models;
-using System.Collections.Generic;
+using RestaurantDL;
 using System.Linq;
 
-namespace RestaurantBL.Managers
+public class ReservatieManager : IReservatieManager
 {
-    public class ReservatieManager : IReservatieManager
+    private readonly RestaurantContext _context;
+
+    public ReservatieManager(RestaurantContext context)
     {
-        private readonly List<Reservatie> _reservaties; // Nog aan te passen ivm database
+        _context = context;
+    }
 
-        public ReservatieManager()
+    public Reservatie MaakReservatie(Reservatie reservatie)
+    {
+        _context.Reservaties.Add(reservatie);
+        _context.SaveChanges();
+        return reservatie;
+    }
+
+    public Reservatie UpdateReservatie(Reservatie reservatie)
+    {
+        var bestaandeReservatie = _context.Reservaties.Find(reservatie.Reservatienummer);
+        if (bestaandeReservatie != null)
         {
-            _reservaties = new List<Reservatie>();
+            // Update logica nog impl...
+            _context.SaveChanges();
         }
+        return bestaandeReservatie;
+    }
 
-        public Reservatie MaakReservatie(Reservatie reservatie)
+    public void AnnuleerReservatie(int reservatienummer)
+    {
+        var reservatie = _context.Reservaties.Find(reservatienummer);
+        if (reservatie != null)
         {
-            _reservaties.Add(reservatie); 
-            return reservatie;
-        }
-
-        public Reservatie UpdateReservatie(Reservatie reservatie)
-        {
-            var bestaandeReservatie = _reservaties.FirstOrDefault(r => r.Reservatienummer == reservatie.Reservatienummer);
-            if (bestaandeReservatie != null)
-            {
-                // Update de reservatie details
-            }
-            return bestaandeReservatie;
-        }
-
-        public void AnnuleerReservatie(int reservatienummer)
-        {
-            var reservatie = _reservaties.FirstOrDefault(r => r.Reservatienummer == reservatienummer);
-            if (reservatie != null)
-            {
-                _reservaties.Remove(reservatie);
-            }
+            _context.Reservaties.Remove(reservatie);
+            _context.SaveChanges();
         }
     }
 }

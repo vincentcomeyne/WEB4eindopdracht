@@ -1,43 +1,42 @@
 ﻿using RestaurantBL.Interfaces;
 using RestaurantBL.Models;
-using System.Collections.Generic;
+using RestaurantDL;
 using System.Linq;
 
-namespace RestaurantBL.Managers
+public class GebruikerManager : IGebruikerManager
 {
-    public class GebruikerManager : IGebruikerManager
+    private readonly RestaurantContext _context;
+
+    public GebruikerManager(RestaurantContext context)
     {
-        private readonly List<Gebruiker> _gebruikers; // nog aan te passen ivm database
+        _context = context;
+    }
 
-        public GebruikerManager()
+    public Gebruiker RegistreerGebruiker(Gebruiker gebruiker)
+    {
+        _context.Gebruikers.Add(gebruiker);
+        _context.SaveChanges();
+        return gebruiker;
+    }
+
+    public Gebruiker UpdateGebruiker(Gebruiker gebruiker)
+    {
+        var bestaandeGebruiker = _context.Gebruikers.Find(gebruiker.Klantnummer);
+        if (bestaandeGebruiker != null)
         {
-            _gebruikers = new List<Gebruiker>();
+            // Update logica nog impl...
+            _context.SaveChanges();
         }
+        return bestaandeGebruiker;
+    }
 
-        public Gebruiker RegistreerGebruiker(Gebruiker gebruiker)
+    public void UitschrijvenGebruiker(int klantnummer)
+    {
+        var gebruiker = _context.Gebruikers.Find(klantnummer);
+        if (gebruiker != null)
         {
-            // Voeg logica toe om te controleren of de gebruiker al bestaat
-            _gebruikers.Add(gebruiker); 
-            return gebruiker;
-        }
-
-        public Gebruiker UpdateGebruiker(Gebruiker gebruiker)
-        {
-            var bestaandeGebruiker = _gebruikers.FirstOrDefault(g => g.Klantnummer == gebruiker.Klantnummer);
-            if (bestaandeGebruiker != null)
-            {
-                // Update de gegevens van de gebruiker
-            }
-            return bestaandeGebruiker;
-        }
-
-        public void UitschrijvenGebruiker(int klantnummer)
-        {
-            var gebruiker = _gebruikers.FirstOrDefault(g => g.Klantnummer == klantnummer);
-            if (gebruiker != null)
-            {
-                _gebruikers.Remove(gebruiker);
-            }
+            _context.Gebruikers.Remove(gebruiker);
+            _context.SaveChanges();
         }
     }
 }
